@@ -1,31 +1,12 @@
 import React, { useState, useCallback, useRef } from "react";
 import { produce } from "immer";
-const R = 50;
-const C = 50;
+import { generateGrid, operations, R, C } from "./utils";
+import "./App.css";
 
-const operations = [
-  [0, 1],
-  [0, -1],
-  [1, 1],
-  [1, -1],
-  [-1, 1],
-  [-1, -1],
-  [1, 0],
-  [-1, 0],
-];
-
-const generateGrid = () => {
-  const rows = [];
-  for (let i = 0; i < R; i++) {
-    rows.push(Array.from(Array(C), () => (Math.random() > 0.8 ? 1 : 0)));
-  }
-  return rows;
-};
 const App = () => {
   const [grid, setGrid] = useState(() => {
     return generateGrid();
   });
-
   const [running, setRunning] = useState(false);
   const runningRef = useRef(running);
   runningRef.current = running;
@@ -59,7 +40,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <button
         style={{ marginRight: 50 }}
         onClick={() => {
@@ -76,7 +57,7 @@ const App = () => {
       <div
         style={{
           display: "grid",
-          width: "100vw",
+          width: "100%",
           gridTemplateColumns: `repeat(${C}, 20px)`,
           gridTemplateRows: `repeat(${R}, 20px)`,
           gap: 2,
@@ -102,7 +83,7 @@ const App = () => {
           ))
         )}
       </div>
-    </>
+    </div>
   );
 };
 
